@@ -41,6 +41,8 @@ export type StackNode =
 
 export class ExecutionContext {
   private readonly stack: StackNode[] = [];
+  private timers: Map<string, number> = new Map();
+
 
   constructor(
     public readonly pipeline: PipelineDefinition,
@@ -161,5 +163,18 @@ export class ExecutionContext {
       return this.wrapperFactories.BlockType.wrap(currentNode.type);
     }
     assertUnreachable(currentNode);
+  }
+  public startTimer(label: string) {
+    this.timers.set(label, Date.now());
+  }
+
+  public stopTimer(label: string): number | undefined {
+    const startTime = this.timers.get(label);
+    if (startTime === undefined) {
+      return undefined;
+    }
+    const endTime = Date.now();
+    this.timers.delete(label);
+    return endTime - startTime;
   }
 }
