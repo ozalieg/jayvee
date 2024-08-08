@@ -37,6 +37,11 @@ pipeline CarsPipeline {
   // 6. Below the pipes, we usually define the blocks 
   // that are connected by the pipes.
 
+  //TODO: should measure the execution time of CarsExtractor block (7.)
+  block CarsExtractorTimer oftype TimeMeasurement {
+    blockType: "HttpExtractor";
+  }
+
   // 7. Blocks instantiate a block type by using the oftype keyword.
   // The block type defines the available properties that the block
   // can use to specify the intended behavior of the block 

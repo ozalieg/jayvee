@@ -1,0 +1,16 @@
+// SPDX-FileCopyrightText: 2023 Friedrich-Alexander-Universitat Erlangen-Nurnberg
+//
+// SPDX-License-Identifier: AGPL-3.0-only
+
+/**
+* Measures the execution time of the given block
+*/
+publish builtin blocktype TimeMeasurement {
+    input default oftype None;
+    output default oftype None;
+
+    /**
+    * The type of block to measure.
+    */
+    property blockType oftype text;
+}

@@ -3,10 +3,10 @@ import {
   AbstractBlockExecutor,
   type BlockExecutorClass,
   type ExecutionContext,
-  implementsStatic, IOTypeImplementation,
+  implementsStatic, IOTypeImplementation, NONE,
 } from '@jvalue/jayvee-execution';
 import { IOType } from '@jvalue/jayvee-language-server';
-import {None} from "fp-ts/Option";
+import {none, None} from "fp-ts/Option";
 
 @implementsStatic<BlockExecutorClass>()
 export class TimeMeasurementExecutor extends AbstractBlockExecutor<
@@ -40,14 +40,18 @@ export class TimeMeasurementExecutor extends AbstractBlockExecutor<
     const executorType= executor.type;
 
     switch (executorType) {
-      case('ArchiveInterpreter'):
+      case 'HttpExtractor':
+        // Execute the nested block
+        const nestedInput: IOTypeImplementation<any> = NONE; //block input type
+        const result = await executor.doExecute(nestedInput, context);
+
     }
 
     const elapsedTime = context.stopTimer(blockLabel);
     if (elapsedTime !== undefined) {
       context.logger.logInfo(`Execution time for block ${blockType}: ${elapsedTime} ms`);
     }
-    return null;
+    return R.ok(NONE);
   }
 }
 
